@@ -1,0 +1,18 @@
+.button {
+	border: 2px solid #00aaff;
+	background-color: #00aaff;
+	color: #fff;
+	padding: 7px 15px;
+	text-transform: uppercase;
+	display: inlne-block;
+	font-size: 18px;
+	line-height: 1;
+	border-radius: 3px;
+	transition: all 0.4s;
+}
+
+.button:hover {
+	background-color: #fff;
+	color: #00aaff;
+	cursor: pointer;
+}
