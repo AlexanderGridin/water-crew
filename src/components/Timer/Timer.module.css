@@ -1,0 +1,17 @@
+.timer {
+	background-color: #fff;
+	font-size: 18px;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	padding: 7px;
+	color: #000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	text-align: center;
+	display: inline-block;
+	max-width: 150px;
+	box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
+}
