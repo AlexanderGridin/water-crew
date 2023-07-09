@@ -21,6 +21,7 @@ export const Timer = ({ onDone }: TimerProps) => {
 
 			isTimerInitialized = true;
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

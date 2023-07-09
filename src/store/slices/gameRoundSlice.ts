@@ -6,11 +6,21 @@ import { randomlyPickEntities } from "../../utils";
 export interface GameRoundState {
 	entities: EntityModel[];
 	userEntities: EntityModel[];
+	isInProgress: boolean;
+	userTotalScore: number;
+	userTotalSelections: number;
+	userCorrectSelections: number;
+	userIncorrectSelections: number;
 }
 
 const initialState: GameRoundState = {
 	entities: [],
 	userEntities: [],
+	isInProgress: false,
+	userTotalScore: 0,
+	userTotalSelections: 0,
+	userCorrectSelections: 0,
+	userIncorrectSelections: 0,
 };
 
 export const gameRoundSlice = createSlice({
@@ -68,29 +78,50 @@ export const gameRoundSlice = createSlice({
 		},
 
 		checkRound: (state: GameRoundState) => {
+			state.isInProgress = false;
+
+			let totalSelections = 0;
+			let correctSelections = 0;
+			let incorrectSelections = 0;
+
 			state.userEntities = state.userEntities.map((userEntity) => {
 				if (!userEntity.isSelected) {
 					return userEntity;
 				}
 
+				totalSelections++;
+
 				const isEntityExistInEntities = state.entities.find(
 					(entity) => entity.id === userEntity.id
 				);
+
 				if (isEntityExistInEntities) {
+					correctSelections++;
+
 					return {
 						...userEntity,
 						isCorrectSelection: true,
 					};
 				}
 
+				incorrectSelections++;
+
 				return {
 					...userEntity,
 					isIncorrectSelection: true,
 				};
 			});
+
+			state.userTotalSelections = totalSelections;
+			state.userCorrectSelections = correctSelections;
+			state.userIncorrectSelections = incorrectSelections;
+
+			state.userTotalScore =
+				state.userTotalScore + (correctSelections - incorrectSelections);
 		},
 
 		startRound: (state: GameRoundState) => {
+			state.isInProgress = true;
 			state.entities = randomlyPickEntities(10);
 
 			if (!state.userEntities.length) {
@@ -108,6 +139,11 @@ export const gameRoundSlice = createSlice({
 			const newEntities = randomlyPickEntities(selectedEntities.length);
 			state.userEntities = [...unselectedEntities, ...newEntities];
 		},
+
+		resetRoundStatistics: (state: GameRoundState) => {
+			state.userCorrectSelections = 0;
+			state.userIncorrectSelections = 0;
+		},
 	},
 });
 
@@ -118,5 +154,7 @@ export const {
 	deselectEntity,
 	checkRound,
 	startRound,
+	resetRoundStatistics,
 } = gameRoundSlice.actions;
+
 export const gameRoundReducer = gameRoundSlice.reducer;

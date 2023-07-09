@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { configReducer, gameRoundReducer } from "./slices";
+import { modalsReducer } from "./slices/modalsSlice";
 
 export const store = configureStore({
 	reducer: {
 		config: configReducer,
 		gameRound: gameRoundReducer,
+		modals: modalsReducer,
 	},
 });
 

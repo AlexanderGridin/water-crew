@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { EntityModel } from "../../models";
+import { useGameRoundSelector } from "../../store/selectors";
 import { deselectEntity, selectEntity } from "../../store/slices";
 import { EntityCard } from "../EntityCard";
 import styles from "./UserCards.module.css";
@@ -9,9 +10,14 @@ interface UserCardsProps {
 }
 
 export const UserCards = ({ entities }: UserCardsProps) => {
+	const isRoundInProgress = useGameRoundSelector("isInProgress");
 	const dispatch = useDispatch();
 
 	const handleCardClick = (entity: EntityModel) => () => {
+		if (!isRoundInProgress) {
+			return;
+		}
+
 		if (!entity.isSelected) {
 			dispatch(selectEntity(entity));
 			return;

@@ -1,0 +1,30 @@
+.content {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	margin: auto;
+	transform: translateY(-50%);
+	max-width: 850px;
+	background-color: #fff;
+	color: #000;
+	border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+	padding: 25px;
+	outline: none;
+	font-size: 18px;
+	line-height: 1.1;
+}
+
+.correct {
+	color: #a3be8c;
+}
+
+.incorrect {
+	color: #bf616a;
+}
+
+.total {
+	color: #5e81ac;
+	font-size: 32px;
+}
