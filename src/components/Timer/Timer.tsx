@@ -4,7 +4,11 @@ import styles from "./Timer.module.css";
 
 let isTimerInitialized = false;
 
-export const Timer = () => {
+interface TimerProps {
+	onDone: () => void;
+}
+
+export const Timer = ({ onDone }: TimerProps) => {
 	const [time, setTime] = useState(0);
 
 	useEffect(() => {
@@ -13,9 +17,7 @@ export const Timer = () => {
 				setTime(Math.ceil(ms / 1000));
 			});
 
-			timer.on("done", () => {
-				console.log("Timer end!");
-			});
+			timer.on("done", onDone);
 
 			isTimerInitialized = true;
 		}

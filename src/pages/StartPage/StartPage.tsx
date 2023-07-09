@@ -11,6 +11,7 @@ export const StartPage = () => {
 		if (document.body.requestFullscreen) {
 			document.body.requestFullscreen();
 			navigate("/game");
+
 			return;
 		}
 

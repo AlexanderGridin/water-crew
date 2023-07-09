@@ -1,20 +1,20 @@
-import { Entity } from "../../mockData";
+import { EntityModel } from "../../models";
 import styles from "./Entity.module.css";
 
-interface EntityComponentProps {
-	entity: Entity;
+interface EntityProps {
+	entity: EntityModel;
 	showName?: boolean;
 }
 
-export const EntityComponent = ({
-	entity,
-	showName = false,
-}: EntityComponentProps) => {
+export const Entity = ({ entity, showName = false }: EntityProps) => {
 	return (
 		<div className={styles.wrapper}>
-			<div className={styles.image} style={{ backgroundColor: entity.color }}>
-				{entity.id}
-			</div>
+			<div
+				className={styles.image}
+				style={{
+					backgroundColor: entity.color,
+				}}
+			></div>
 
 			{showName && <h2 className={styles.title}>{entity.name}</h2>}
 		</div>

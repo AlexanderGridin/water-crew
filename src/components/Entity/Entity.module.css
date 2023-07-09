@@ -8,6 +8,7 @@
 	width: 150px;
 	height: 150px;
 	border-radius: 50%;
+	overflow: hidden;
 
 	color: #000;
 	font-size: 18px;
@@ -19,4 +20,5 @@
 .title {
 	text-align: center;
 	margin-top: 15px;
+	color: #000;
 }

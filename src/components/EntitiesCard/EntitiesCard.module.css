@@ -6,10 +6,10 @@
 
 .content {
 	background-color: #fff;
-	padding: 25px;
+	padding: 10px;
 	border-radius: 5px;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-	max-width: 1035px;
+	max-width: 840px;
 	width: 100%;
 }
 

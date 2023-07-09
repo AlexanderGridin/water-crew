@@ -1,16 +1,31 @@
-import { Entity, mockUserCards } from "../../mockData";
-import { EntityComponent } from "../Entity";
+import { useDispatch } from "react-redux";
+import { EntityModel } from "../../models";
+import { deselectEntity, selectEntity } from "../../store/slices";
+import { EntityCard } from "../EntityCard";
 import styles from "./UserCards.module.css";
 
-export const UserCards = () => {
+interface UserCardsProps {
+	entities: EntityModel[];
+}
+
+export const UserCards = ({ entities }: UserCardsProps) => {
+	const dispatch = useDispatch();
+
+	const handleCardClick = (entity: EntityModel) => () => {
+		if (!entity.isSelected) {
+			dispatch(selectEntity(entity));
+			return;
+		}
+
+		dispatch(deselectEntity(entity));
+	};
+
 	return (
 		<div className={styles.wrapper}>
 			<ul className={styles.list}>
-				{mockUserCards.map((card: Entity) => (
-					<li key={card.id} className={styles.listItem}>
-						<div>
-							<EntityComponent entity={card} showName />
-						</div>
+				{entities.map((entity: EntityModel) => (
+					<li key={entity.uniqueId} className={styles.listItem}>
+						<EntityCard entity={entity} onClick={handleCardClick(entity)} />
 					</li>
 				))}
 			</ul>

@@ -1,0 +1,21 @@
+.wrapper {
+	background-color: #fff;
+	padding: 10px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	transition: background-color 0.4s;
+	cursor: pointer;
+}
+
+.selected {
+	background-color: #ebcb8b;
+}
+
+.correct {
+	background-color: #a3be8c;
+}
+
+.incorrect {
+	background-color: #bf616a;
+}

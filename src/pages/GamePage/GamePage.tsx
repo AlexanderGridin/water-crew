@@ -1,19 +1,38 @@
-import { BigCard } from "../../components/BigCard";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { EntitiesCard } from "../../components/EntitiesCard";
 import { PageWrapper } from "../../components/PageWrapper";
 import { Timer } from "../../components/Timer";
 import { UserCards } from "../../components/UserCards";
-import { bigCardMockData } from "../../mockData";
+import { timer } from "../../services/timer";
+import { useGameRoundSelector } from "../../store/selectors/useGameRoundSelector";
+import { checkRound, startRound } from "../../store/slices";
 
 export const GamePage = () => {
+	const dispatch = useDispatch();
+
+	const entities = useGameRoundSelector("entities");
+	const userEntities = useGameRoundSelector("userEntities");
+
+	useEffect(() => {
+		dispatch(startRound());
+
+		timer.start(10 * 1000);
+	}, [dispatch]);
+
+	const handleTimerDone = () => {
+		dispatch(checkRound());
+	};
+
 	return (
 		<PageWrapper>
-			<Timer />
+			<Timer onDone={handleTimerDone} />
 
 			<div style={{ paddingTop: "45px" }}>
-				<BigCard entities={bigCardMockData} />
+				<EntitiesCard entities={entities} />
 			</div>
 
-			<UserCards />
+			<UserCards entities={userEntities} />
 		</PageWrapper>
 	);
 };
