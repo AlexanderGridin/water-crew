@@ -1,5 +1,5 @@
 import random from "random";
-import { mockEntities } from "../mockData";
+import { entities } from "../mockData";
 import { EntityModel } from "../models";
 import { generateId } from "./generateId";
 
@@ -8,7 +8,7 @@ export const randomlyPickEntities = (amount: number): EntityModel[] => {
 
 	if (amount) {
 		for (let i = 0; i < amount; i++) {
-			const entity = random.choice(mockEntities) as EntityModel;
+			const entity = random.choice(entities) as EntityModel;
 			result.push({
 				...entity,
 				uniqueId: generateId(),

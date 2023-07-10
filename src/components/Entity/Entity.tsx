@@ -7,12 +7,14 @@ interface EntityProps {
 }
 
 export const Entity = ({ entity, showName = false }: EntityProps) => {
+	console.log(entity.imgUrl);
 	return (
 		<div className={styles.wrapper}>
 			<div
 				className={styles.image}
 				style={{
-					backgroundColor: entity.color,
+					// backgroundColor: entity.color,
+					backgroundImage: `url(${entity.imgUrl})`,
 				}}
 			></div>
 

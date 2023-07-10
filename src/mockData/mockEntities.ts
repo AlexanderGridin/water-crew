@@ -1,9 +1,9 @@
-import { EntityModel } from "../models";
+import { EntityModel, Fish } from "../models";
+import { fishes } from "../staticData";
 
-const colors = ["red", "blue", "pink", "yellow", "violet", "magenta", "cyan"];
-
-export const mockEntities: EntityModel[] = colors.map(
-	(color: string, index: number) => ({
-		...new EntityModel({ color, name: `Entity ${index}` }),
-	})
-);
+export const entities: EntityModel[] = fishes.map((fish: Fish) => ({
+	...new EntityModel({
+		name: fish.name,
+		imgUrl: `/assets/fishes-imgs/${fish.code}.jpg`,
+	}),
+}));
