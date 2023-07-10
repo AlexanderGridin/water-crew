@@ -2,9 +2,15 @@
 	position: fixed;
 	left: 0;
 	right: 0;
-	bottom: 0;
+	bottom: -250px;
+	/* bottom: -100%; */
 	margin: auto;
 	max-width: 800px;
+	transition: bottom 0.4s;
+}
+
+.visible {
+	bottom: 0;
 }
 
 .list {

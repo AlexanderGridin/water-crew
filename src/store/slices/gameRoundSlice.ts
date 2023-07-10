@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { EntityModel } from "../../models";
 import { randomlyPickEntities } from "../../utils";
+import { gamePhase, GamePhase } from "../../staticData";
 
 export interface GameRoundState {
 	entities: EntityModel[];
@@ -11,6 +12,7 @@ export interface GameRoundState {
 	userTotalSelections: number;
 	userCorrectSelections: number;
 	userIncorrectSelections: number;
+	phase: GamePhase;
 }
 
 const initialState: GameRoundState = {
@@ -21,6 +23,7 @@ const initialState: GameRoundState = {
 	userTotalSelections: 0,
 	userCorrectSelections: 0,
 	userIncorrectSelections: 0,
+	phase: gamePhase.NONE,
 };
 
 export const gameRoundSlice = createSlice({
@@ -144,6 +147,10 @@ export const gameRoundSlice = createSlice({
 			state.userCorrectSelections = 0;
 			state.userIncorrectSelections = 0;
 		},
+
+		setPhase: (state: GameRoundState, action: PayloadAction<GamePhase>) => {
+			state.phase = action.payload;
+		},
 	},
 });
 
@@ -155,6 +162,7 @@ export const {
 	checkRound,
 	startRound,
 	resetRoundStatistics,
+	setPhase,
 } = gameRoundSlice.actions;
 
 export const gameRoundReducer = gameRoundSlice.reducer;

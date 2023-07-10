@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { EntitiesCard } from "../../components/EntitiesCard";
 import { GameRoundModal } from "../../components/GameRoundModal";
@@ -8,26 +8,46 @@ import { Timer } from "../../components/Timer";
 import { UserCards } from "../../components/UserCards";
 import { UserStats } from "../../components/UserStats";
 import { timer } from "../../services/timer";
+import { gamePhase } from "../../staticData";
 import { useGameRoundSelector } from "../../store/selectors/useGameRoundSelector";
-import { checkRound, openModal, startRound } from "../../store/slices";
+import {
+	checkRound,
+	openModal,
+	setPhase,
+	startRound,
+} from "../../store/slices";
 
 export const GamePage = () => {
 	const dispatch = useDispatch();
 	const isGameRoundInProgress = useGameRoundSelector("isInProgress");
+	const phase = useGameRoundSelector("phase");
 
 	const entities = useGameRoundSelector("entities");
 	const userEntities = useGameRoundSelector("userEntities");
 
 	useEffect(() => {
+		dispatch(setPhase(gamePhase.REMEMBERING));
 		dispatch(startRound());
 
 		timer.start(10 * 1000);
 	}, [dispatch]);
 
-	const handleTimerDone = () => {
-		dispatch(checkRound());
-		dispatch(openModal("gameRoundModal"));
-	};
+	const handleTimerDone = useCallback(() => {
+		switch (phase) {
+			case gamePhase.REMEMBERING:
+				dispatch(setPhase(gamePhase.GUESSING));
+				timer.start(10 * 1000);
+
+				break;
+
+			case gamePhase.GUESSING:
+				dispatch(setPhase(gamePhase.CHECK_RESULTS));
+				dispatch(checkRound());
+				dispatch(openModal("gameRoundModal"));
+
+				break;
+		}
+	}, [phase, dispatch]);
 
 	return (
 		<PageWrapper>

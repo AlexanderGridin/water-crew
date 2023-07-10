@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { EntityModel } from "../../models";
+import { gamePhase } from "../../staticData";
 import { useGameRoundSelector } from "../../store/selectors";
 import { deselectEntity, selectEntity } from "../../store/slices";
 import { EntityCard } from "../EntityCard";
@@ -11,6 +12,9 @@ interface UserCardsProps {
 
 export const UserCards = ({ entities }: UserCardsProps) => {
 	const isRoundInProgress = useGameRoundSelector("isInProgress");
+	const phase = useGameRoundSelector("phase");
+	const isRemembering = phase === gamePhase.REMEMBERING;
+	const isNone = phase === gamePhase.NONE;
 	const dispatch = useDispatch();
 
 	const handleCardClick = (entity: EntityModel) => () => {
@@ -27,7 +31,11 @@ export const UserCards = ({ entities }: UserCardsProps) => {
 	};
 
 	return (
-		<div className={styles.wrapper}>
+		<div
+			className={`${styles.wrapper} ${
+				!isRemembering && !isNone ? styles.visible : ""
+			}`}
+		>
 			<ul className={styles.list}>
 				{entities.map((entity: EntityModel) => (
 					<li key={entity.uniqueId} className={styles.listItem}>

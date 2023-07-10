@@ -6,12 +6,14 @@ export interface ConfigState {
 	isFullScreen: boolean;
 	loadedImages: any[];
 	imgsLoadingProgress: number;
+	prevOnDone: null | (() => void);
 }
 
 const initialState: ConfigState = {
 	isFullScreen: false,
 	loadedImages: [],
 	imgsLoadingProgress: 0,
+	prevOnDone: null,
 };
 
 export const configSlice = createSlice({
@@ -34,9 +36,20 @@ export const configSlice = createSlice({
 
 			state.imgsLoadingProgress = progress;
 		},
+		setPrevOnDone: (
+			state: ConfigState,
+			action: PayloadAction<{ prevOnDone: () => void }>
+		) => {
+			state.prevOnDone = action.payload.prevOnDone;
+		},
 	},
 });
 
-export const { setFullScreen, setLoadedImages, setImgsLoadingProgress } =
-	configSlice.actions;
+export const {
+	setFullScreen,
+	setLoadedImages,
+	setImgsLoadingProgress,
+	setPrevOnDone,
+} = configSlice.actions;
+
 export const configReducer = configSlice.reducer;
