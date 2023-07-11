@@ -8,7 +8,6 @@ interface TimerProps {
 
 export const Timer = ({ onDone }: TimerProps) => {
 	const [time, setTime] = useState(0);
-	const prevOnDone = useRef<null | (() => void)>(null);
 	const isTimerInitialized = useRef<boolean>(false);
 
 	useEffect(() => {
@@ -24,18 +23,16 @@ export const Timer = ({ onDone }: TimerProps) => {
 	}, []);
 
 	useEffect(() => {
-		if (prevOnDone.current) {
-			timer.off("done", prevOnDone.current);
-		}
-
-		prevOnDone.current = onDone;
-
 		timer.on("done", onDone);
+
+		return () => {
+			timer.off("done", onDone);
+		};
 	}, [onDone]);
 
 	return (
 		<div className={styles.timer}>
-			<div>{time}</div>
+			<div>{time < 10 ? `00:0${time}` : `00:${time}`}</div>
 		</div>
 	);
 };

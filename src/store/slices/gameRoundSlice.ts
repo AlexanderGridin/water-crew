@@ -3,6 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { EntityModel } from "../../models";
 import { randomlyPickEntities } from "../../utils";
 import { gamePhase, GamePhase } from "../../staticData";
+import { pickRandomUniqueEntities } from "../../utils/pickRandomUniqueEntities";
 
 export interface GameRoundState {
 	entities: EntityModel[];
@@ -125,7 +126,7 @@ export const gameRoundSlice = createSlice({
 
 		startRound: (state: GameRoundState) => {
 			state.isInProgress = true;
-			state.entities = randomlyPickEntities(10);
+			state.entities = pickRandomUniqueEntities(10);
 
 			if (!state.userEntities.length) {
 				state.userEntities = randomlyPickEntities(5);

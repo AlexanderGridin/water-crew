@@ -25,35 +25,48 @@ export const GamePage = () => {
 	const entities = useGameRoundSelector("entities");
 	const userEntities = useGameRoundSelector("userEntities");
 
-	useEffect(() => {
+	const startGameRound = () => {
 		dispatch(setPhase(gamePhase.REMEMBERING));
 		dispatch(startRound());
-
 		timer.start(10 * 1000);
-	}, [dispatch]);
+	};
+
+	const startGuessing = () => {
+		dispatch(setPhase(gamePhase.GUESSING));
+		timer.start(10 * 1000);
+	};
+
+	const endRound = () => {
+		dispatch(setPhase(gamePhase.CHECK_RESULTS));
+		dispatch(checkRound());
+		dispatch(openModal("gameRoundModal"));
+	};
+
+	useEffect(() => {
+		startGameRound();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const handleTimerDone = useCallback(() => {
 		switch (phase) {
 			case gamePhase.REMEMBERING:
-				dispatch(setPhase(gamePhase.GUESSING));
-				timer.start(10 * 1000);
-
+				startGuessing();
 				break;
 
 			case gamePhase.GUESSING:
-				dispatch(setPhase(gamePhase.CHECK_RESULTS));
-				dispatch(checkRound());
-				dispatch(openModal("gameRoundModal"));
-
+				endRound();
 				break;
 		}
-	}, [phase, dispatch]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [phase]);
 
 	return (
 		<PageWrapper>
 			<UserStats />
 			<Timer onDone={handleTimerDone} />
-			{!isGameRoundInProgress && <StartRoundButton />}
+			{!isGameRoundInProgress && <StartRoundButton onClick={startGameRound} />}
 
 			<div style={{ paddingTop: "45px" }}>
 				<EntitiesCard entities={entities} />

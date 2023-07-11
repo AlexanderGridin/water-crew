@@ -24,7 +24,11 @@ export const EntitiesCard = ({ entities }: EntitiesCardProps) => {
 					))}
 				</ul>
 
-				{isHidden && <div className={styles.backdrop}></div>}
+				<div
+					className={`${styles.backdrop} ${
+						isHidden ? styles.backdropVisible : ""
+					}`}
+				></div>
 			</div>
 		</div>
 	);

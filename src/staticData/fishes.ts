@@ -59,7 +59,7 @@ export const fishes: Fish[] = [
 	},
 	{
 		code: "morskyj_pavuk",
-		name: "Морський коник",
+		name: "Морський павук",
 	},
 	{
 		code: "mushlya",
